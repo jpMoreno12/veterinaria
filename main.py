@@ -1,58 +1,93 @@
-from classes.subclasses.medico import Medico
-from classes.subclasses.funcionario import Funcionario
-from classes.subclasses.cliente import Cliente
-from classes.animal import Animal
-from classes.agendamento import Agendamento
+from flask import Flask, render_template, redirect, request
+from classes.subclasses.cliente import Cliente  # Ajuste o caminho conforme necessário
+from classes.subclasses.medico import Medico  # Ajuste o caminho conforme necessário
+from classes.subclasses.funcionario import Funcionario  # Ajuste o caminho conforme necessário
+from classes.animal import Animal   # Ajuste o caminho conforme necessário
+from classes.agendamento import Agendamento   # Ajuste o caminho conforme necessário
 
-print('Digite os dados do cliente para o cadastro:')
-nome_cliente = input('Nome: ')
-nome_animal = input('Nome do animal: ')
-cpf_cliente = input('CPF: ')
-endereco_cliente = input('Endereço: ')
-status_inadimplencia = input('Status de inadimplência: ')
-telefone_cliente = input('Telefone: ')
 
-cliente = Cliente(nome_cliente, nome_animal, cpf_cliente, endereco_cliente, status_inadimplencia, telefone_cliente)
+app = Flask(__name__, template_folder='screens')
+app.config['SECRET_KEY'] = 'MINHAKEY'
 
-print('Digite os dados do funcionário:')
-nome_funcionario = input('Nome: ')
-endereco_funcionario = input('Endereço: ')
-cpf_funcionario = input('CPF: ')
-telefone_funcionario = input('Telefone: ')
-funcao_funcionario = input('Função: ')
-sindicalizado_funcionario = input('Sindicalizado (Sim/Não): ')
-carga_horaria_semanal = input('Carga horária semanal: ')
 
-funcionario = Funcionario(nome_funcionario, endereco_funcionario, cpf_funcionario, telefone_funcionario, funcao_funcionario, sindicalizado_funcionario, carga_horaria_semanal)
+funcionario = Funcionario(
+    nome='Ana Oliveira',
+    endereco='Rua das Flores, 123, Centro',
+    cpf='123.456.789-00',
+    telefone='(11) 98765-4321',
+    funcao='Veterinária',
+    sindicalizando='Sim',
+    carga_horaria_semanal='40 horas/semana'
+)
 
-print('Digite os dados do médico:')
-nome_medico = input('Nome: ')
-cpf_medico = input('CPF: ')
-carga_horaria_medico = input('Carga horária: ')
-endereco_medico = input('Endereço: ')
-especialidade_medico = input('Especialidade: ')
-registro_profissional = input('Registro profissional: ')
-telefone_medico = input('Telefone: ')
+# Dados fictícios para Medico
+medico = Medico(
+    nome='Dr. João Silva',
+    cpf='987.654.321-00',
+    carga_horaria='20 horas/semana',
+    endereco='Avenida Brasil, 456, Sala 301',
+    especialidade='Cardiologia',
+    registro_profissional='CRM 123456',
+    telefone='(21) 12345-6789'
+)
 
-medico = Medico(nome_medico, cpf_medico, carga_horaria_medico, endereco_medico, especialidade_medico, registro_profissional, telefone_medico)
+# Dados fictícios para Animal
+animal = Animal(
+    nome='Rex',
+    raca='Labrador',
+    especie='Canino',
+    data_nascimento='2018-05-10',
+    peso='30 kg',
+    sexo='Macho'
+)
 
-print('Digite os dados do animal:')
-nome_animal = input('Nome: ')
-raca_animal = input('Raça: ')
-especie_animal = input('Espécie: ')
-data_nascimento_animal = input('Data de nascimento: ')
-peso_animal = input('Peso: ')
-sexo_animal = input('Sexo: ')
+# Dados fictícios para Agendamento
+agendamento = Agendamento(
+    data='2024-09-20',
+    medico='Dr. João Silva',
+    cliente= 'x',
+    funcionario= 'Ana Oliveira',
+    compareceu='Sim',
+    concluido='Não',
+    valor=150.00,
+    pago='Não'
+)
 
-animal = Animal(nome_animal, raca_animal, especie_animal, data_nascimento_animal, peso_animal, sexo_animal)
+@app.route('/')
+def home():
+    # Renderize o formulário de cadastro
+    return render_template('cadastro.html')
 
-print('Digite os dados do agendamento:')
-data_agendamento = input('Data: ')
-compareceu = input('Compareceu (Sim/Não): ')
-concluido = input('Concluído (Sim/Não): ')
-valor = float(input('Valor: '))
-pago = input('Pago (Sim/Não): ')
+@app.route('/cadastro', methods=['POST'])
+def cadastro():
+    nome = request.form.get('nome')
+    telefone = request.form.get('telefone')
+    endereco = request.form.get('endereco')
+    cpf = request.form.get('cpf')
+    animal = request.form.get('animal')
+    status_inadimplencia = request.form.get('inadimplencia')
 
-agendamento = Agendamento(data_agendamento, medico.nome, cliente.nome, funcionario.nome, compareceu, concluido, valor, pago)
+    # Crie uma instância da classe Cliente com os dados recebidos
+    cliente = Cliente(
+        nome=nome,
+        telefone=telefone,
+        endereco=endereco,
+        cpf=cpf,
+        animal=animal,
+        status_inadimplencia=status_inadimplencia
+    )
 
-print(f'O animal {animal.nome}, dono {cliente.nome}, concluiu a consulta com o médico {medico.nome}, conforme registrado pelo funcionário {funcionario.nome}.')
+    # Imprima os dados no console para verificação
+    print("Nome:", cliente.nome)
+    print("Telefone:", cliente.telefone)
+    print("Endereço:", cliente.endereco)
+    print("CPF:", cliente.cpf)
+    print("Animal:", cliente.animal)
+    print("Inadimplência:", cliente.inadimplencia)
+
+    agendamento.agendar(agendamento.data, cliente.nome, funcionario.nome, medico.nome, agendamento.valor)
+
+    return render_template('resultado.html', agendamento=agendamento)
+
+if __name__ == "__main__":
+    app.run(debug=True)

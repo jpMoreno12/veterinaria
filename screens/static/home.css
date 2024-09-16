@@ -1,0 +1,87 @@
+/* home.css */
+
+/* Reset básico de margens e preenchimento */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilo geral do corpo da página */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f8f0; /* Cor de fundo verde claro */
+  color: #333; /* Cor do texto */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+}
+
+/* Estilo do contêiner do formulário */
+#form_fundo {
+  background-color: #ffffff; /* Fundo branco para o formulário */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 600px;
+  width: 100%;
+}
+
+/* Estilo do título do formulário */
+#form_fundo h1 {
+  color: #4caf50; /* Verde mais forte para o título */
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Estilo do formulário */
+#form_frente form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estilo dos rótulos dos campos */
+form label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #666;
+}
+
+/* Estilo dos campos de entrada */
+form input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+/* Estilo do botão de envio */
+button[type="submit"] {
+  background-color: #4caf50; /* Verde claro */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 15px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Efeito ao passar o mouse sobre o botão */
+button[type="submit"]:hover {
+  background-color: #45a049; /* Verde um pouco mais escuro */
+}
+
+/* Estilo dos spans dentro do botão, se necessários */
+button[type="submit"] span {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+/* Adicionando algum padding extra para o botão */
+button[type="submit"] span {
+  margin: 0 4px;
+}

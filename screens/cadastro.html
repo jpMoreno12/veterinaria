@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+  <title>Cadastro de Cliente</title>
+</head>
+
+<body>
+
+  <div id="form_fundo">
+    <h1>Realize o seu cadastro</h1>
+    <div id="form_frente">
+      <form action="/cadastro" method="post">
+        <label for="nome">NOME</label>
+        <input type="text" name="nome" id="nome" required placeholder="Digite o seu nome"><br>
+
+        <label for="telefone">TELEFONE</label>
+        <input type="text" name="telefone" id="telefone" required placeholder="Digite o seu telefone"><br>
+
+        <label for="endereco">ENDEREÇO</label>
+        <input type="text" name="endereco" id="endereco" required placeholder="Digite seu endereço"><br>
+
+        <label for="cpf">CPF</label>
+        <input type="text" name="cpf" id="cpf" required placeholder="Digite seu CPF"><br>
+
+        <label for="animal">ANIMAL</label>
+        <input type="text" name="animal" id="animal" required placeholder="Digite o nome do seu animal"><br>
+
+        <label for="inadimplencia">INADIMPLÊNCIA</label>
+        <input type="text" name="inadimplencia" id="inadimplencia" required placeholder="Digite o status de inadimplência"><br>
+
+        <button type="submit" id="btn_cadastro">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span> CADASTRAR
+        </button>
+
+      </form>
+    </div>
+  </div>
+
+</body>
+
+</html>
