@@ -1,12 +1,12 @@
 from flask import Flask, render_template, redirect, request
-from classes.subclasses.cliente import Cliente  # Ajuste o caminho conforme necessário
-from classes.subclasses.medico import Medico  # Ajuste o caminho conforme necessário
-from classes.subclasses.funcionario import Funcionario  # Ajuste o caminho conforme necessário
-from classes.animal import Animal   # Ajuste o caminho conforme necessário
-from classes.agendamento import Agendamento   # Ajuste o caminho conforme necessário
+from classes.subclasses.cliente import Cliente  
+from classes.subclasses.medico import Medico  
+from classes.subclasses.funcionario import Funcionario  
+from classes.animal import Animal   
+from classes.agendamento import Agendamento   
 
 
-app = Flask(__name__, template_folder='screens')
+app = Flask(__name__, template_folder='screens', static_folder='screens/static')
 app.config['SECRET_KEY'] = 'MINHAKEY'
 
 
@@ -20,7 +20,7 @@ funcionario = Funcionario(
     carga_horaria_semanal='40 horas/semana'
 )
 
-# Dados fictícios para Medico
+
 medico = Medico(
     nome='Dr. João Silva',
     cpf='987.654.321-00',
@@ -31,7 +31,7 @@ medico = Medico(
     telefone='(21) 12345-6789'
 )
 
-# Dados fictícios para Animal
+
 animal = Animal(
     nome='Rex',
     raca='Labrador',
@@ -41,7 +41,7 @@ animal = Animal(
     sexo='Macho'
 )
 
-# Dados fictícios para Agendamento
+
 agendamento = Agendamento(
     data='2024-09-20',
     medico='Dr. João Silva',
@@ -55,7 +55,7 @@ agendamento = Agendamento(
 
 @app.route('/')
 def home():
-    # Renderize o formulário de cadastro
+    
     return render_template('cadastro.html')
 
 @app.route('/cadastro', methods=['POST'])
@@ -65,9 +65,9 @@ def cadastro():
     endereco = request.form.get('endereco')
     cpf = request.form.get('cpf')
     animal = request.form.get('animal')
-    status_inadimplencia = request.form.get('inadimplencia')
+    status_inadimplencia = request.form.get('status_inadimplencia')
 
-    # Crie uma instância da classe Cliente com os dados recebidos
+    
     cliente = Cliente(
         nome=nome,
         telefone=telefone,
@@ -77,13 +77,13 @@ def cadastro():
         status_inadimplencia=status_inadimplencia
     )
 
-    # Imprima os dados no console para verificação
+    
     print("Nome:", cliente.nome)
     print("Telefone:", cliente.telefone)
     print("Endereço:", cliente.endereco)
     print("CPF:", cliente.cpf)
     print("Animal:", cliente.animal)
-    print("Inadimplência:", cliente.inadimplencia)
+    print("Inadimplência:", cliente.status_inadimplencia)
 
     agendamento.agendar(agendamento.data, cliente.nome, funcionario.nome, medico.nome, agendamento.valor)
 
